@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useLoading } from "./LoadingContext";
 
 const SignupPage = () => {
   const { userType } = useParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message,setMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const { setLoadingState, setErrorState } = useLoading();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
+
     try {
       const response = await fetch(
         `https://nerve-spark-backend.onrender.com/api/signup/${userType}`,
@@ -23,14 +28,16 @@ const SignupPage = () => {
       );
       const data = await response.json();
       console.log(data);
-      if(data.message === 'User already exists'){
+      if (data.message === "User already exists") {
         setMessage("User already exists");
-      }
-      else{
+      } else {
         navigate(`/dashboard/${userType}/${email}`);
-      } 
+      }
     } catch (error) {
       console.error("Error during signup:", error);
+      setErrorState("An error occurred"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 

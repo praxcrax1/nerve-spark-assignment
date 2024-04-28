@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
+import { useLoading } from "./LoadingContext";
 
-
-const DashboardDealership = ({userType}) => {
+const DashboardDealership = ({ userType }) => {
   const [cars, setCars] = useState([]);
   const [inventory, setInventory] = useState([]);
   const { email } = useParams();
-  const [message, setMessage] = useState([]);
   const [soldVehicles, setSoldVehicles] = useState([]);
+  const { setLoadingState, setErrorState } = useLoading();
 
   useEffect(() => {
     fetchCars();
@@ -16,8 +16,12 @@ const DashboardDealership = ({userType}) => {
   });
 
   const fetchCars = async () => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
     try {
-      const response = await fetch("https://nerve-spark-backend.onrender.com/api/cars");
+      const response = await fetch(
+        "https://nerve-spark-backend.onrender.com/api/cars"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch cars");
       }
@@ -31,7 +35,9 @@ const DashboardDealership = ({userType}) => {
       setInventory(carsInInventory);
     } catch (error) {
       console.error("Error fetching cars:", error);
-      setMessage("Failed to fetch cars");
+      setErrorState("Failed to fetch cars"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
@@ -48,12 +54,14 @@ const DashboardDealership = ({userType}) => {
       return data.cars;
     } catch (error) {
       console.error("Error fetching inventory:", error);
-      setMessage("Failed to fetch inventory");
+      setErrorState("Failed to fetch inventory"); // Set error message
       return [];
     }
   };
 
   const handleAcquireCar = async (carId) => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
     try {
       const response = await fetch(
         `https://nerve-spark-backend.onrender.com/api/dealership/acquire/${email}`,
@@ -70,24 +78,31 @@ const DashboardDealership = ({userType}) => {
       fetchCars();
     } catch (error) {
       console.error("Error acquiring car:", error);
+      setErrorState("Failed to acquire car"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
-   const fetchSoldVehicles = async () => {
-     try {
-       const response = await fetch(
-         `https://nerve-spark-backend.onrender.com/api/dealership/sold-vehicles/${email}`
-       );
-       if (!response.ok) {
-         throw new Error("Failed to fetch sold vehicles");
-       }
-       const data = await response.json();
-       setSoldVehicles(data);
-     } catch (error) {
-       console.error("Error fetching sold vehicles:", error);
-       setMessage("Failed to fetch sold vehicles");
-     }
-   };
+  const fetchSoldVehicles = async () => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
+    try {
+      const response = await fetch(
+        `https://nerve-spark-backend.onrender.com/api/dealership/sold-vehicles/${email}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch sold vehicles");
+      }
+      const data = await response.json();
+      setSoldVehicles(data);
+    } catch (error) {
+      console.error("Error fetching sold vehicles:", error);
+      setErrorState("Failed to fetch sold vehicles"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
+    }
+  };
 
   return (
     <div>
@@ -158,7 +173,6 @@ const DashboardDealership = ({userType}) => {
       ) : (
         <p>No cars sold</p>
       )}
-      {message && <p>{message}</p>}
     </div>
   );
 };

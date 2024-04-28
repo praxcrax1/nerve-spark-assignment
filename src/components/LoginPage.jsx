@@ -1,31 +1,42 @@
 import React, { useState } from "react";
-import { Link, useNavigate , useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useLoading } from "./LoadingContext";
 
 const LoginPage = () => {
   const { userType } = useParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message,setMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const { setLoadingState, setErrorState } = useLoading();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
+
     try {
-      const response = await fetch(`https://nerve-spark-backend.onrender.com/api/login/${userType}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `https://nerve-spark-backend.onrender.com/api/login/${userType}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const data = await response.json();
       console.log(data);
       setMessage(data.message);
-      if (data.message === "Login successful"){
+      if (data.message === "Login successful") {
         navigate(`/dashboard/${userType}/${email}`);
-      } 
+      }
     } catch (error) {
       console.error("Error during login:", error);
+      setErrorState("An error occurred"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 

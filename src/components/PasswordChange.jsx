@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useLoading } from "./LoadingContext";
 
 const PasswordChange = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { setLoadingState, setErrorState } = useLoading();
   const { email } = useParams();
-
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
+
     try {
       const response = await fetch(
         `https://nerve-spark-backend.onrender.com/api/change-password`,
@@ -25,11 +27,11 @@ const PasswordChange = () => {
       );
       const data = await response.json();
       setMessage(data.message);
-      setLoading(false);
     } catch (error) {
       console.error("Error during password change:", error);
-      setLoading(false);
-      setMessage("Failed to change password");
+      setErrorState("Failed to change password"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
@@ -53,9 +55,7 @@ const PasswordChange = () => {
           required
         />
         <br />
-        <button type="submit" disabled={loading}>
-          Change Password
-        </button>
+        <button type="submit">Change Password</button>
       </form>
       <p>{message}</p>
     </div>

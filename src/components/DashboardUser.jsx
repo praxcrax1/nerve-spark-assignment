@@ -1,16 +1,17 @@
-// DashboardUser.jsx
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "./LoadingContext";
 
-const DashboardUser = ({userType}) => {
+const DashboardUser = ({ userType }) => {
   const [cars, setCars] = useState([]);
   const [btnState, setBtnState] = useState(false);
   const [dealerships, setDealerships] = useState({});
-  const { email } = useParams();
   const [filterText, setFilterText] = useState("");
   const [boughtCars, setBoughtCars] = useState([]);
+  const { email } = useParams();
+  const { setLoadingState, setErrorState } = useLoading();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,21 +20,29 @@ const DashboardUser = ({userType}) => {
   });
 
   const fetchCars = async () => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
     try {
-      const response = await fetch("https://nerve-spark-backend.onrender.com/api/cars");
+      const response = await fetch(
+        "https://nerve-spark-backend.onrender.com/api/cars"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch cars");
       }
-      const data = await response.json(); 
+      const data = await response.json();
       setCars(data);
     } catch (error) {
       console.error("Error fetching cars:", error);
+      setErrorState("Failed to fetch cars"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
-  const confirmBuyCar = async ( carId, dealership ) => {
+  const confirmBuyCar = async (carId, dealership) => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
     try {
-      // Call endpoint to buy car
       const response = await fetch(
         `https://nerve-spark-backend.onrender.com/api/buy-car/${email}/${dealership}`,
         {
@@ -45,17 +54,22 @@ const DashboardUser = ({userType}) => {
         }
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch cars");
+        throw new Error("Failed to buy car");
       }
       setCars((prevCars) => prevCars.filter((car) => car.car_id !== carId));
       navigate(`/dashboard/user/${email}`);
     } catch (error) {
       console.error("Error during buying car:", error);
+      setErrorState("Failed to buy car"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
   const handleViewDealerships = async (carId) => {
-    setDealerships({})
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
+    setDealerships({});
     setBtnState(!btnState);
     try {
       const response = await fetch(
@@ -65,14 +79,17 @@ const DashboardUser = ({userType}) => {
         throw new Error("Failed to fetch dealerships");
       }
       const data = await response.json();
-      console.log(data)
+      console.log(data);
 
-        setDealerships((prevDealerships) => ({
-          ...prevDealerships,
-          [carId]: data.dealerships,
-        }));
+      setDealerships((prevDealerships) => ({
+        ...prevDealerships,
+        [carId]: data.dealerships,
+      }));
     } catch (error) {
       console.error("Error fetching dealerships:", error);
+      setErrorState("Failed to fetch dealerships"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
     }
   };
 
@@ -89,33 +106,36 @@ const DashboardUser = ({userType}) => {
       // No filter applied, return all cars
       return cars;
     }
-    return cars.filter((car) =>
-      car.name.toLowerCase().includes(filterText)
-    );
+    return cars.filter((car) => car.name.toLowerCase().includes(filterText));
   };
 
-  const getBoughtCars = async () =>{
+  const getBoughtCars = async () => {
+    setLoadingState(true); // Set loading state to true
+    setErrorState(null); // Reset error state
     try {
-    const response = await fetch(`https://nerve-spark-backend.onrender.com/api/user/cars/${email}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error("Failed to fetch user cars");
-    }
-    
-    const data = await response.json();
-    setBoughtCars(data.cars);
-  } catch (error) {
-    console.error("Error fetching user cars:", error);
-    return [];
-  }
-};
-  
+      const response = await fetch(
+        `https://nerve-spark-backend.onrender.com/api/user/cars/${email}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch user cars");
+      }
+
+      const data = await response.json();
+      setBoughtCars(data.cars);
+    } catch (error) {
+      console.error("Error fetching user cars:", error);
+      setErrorState("Failed to fetch user cars"); // Set error message
+    } finally {
+      setLoadingState(false); // Set loading state back to false
+    }
+  };
 
   return (
     <div>
