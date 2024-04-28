@@ -16,7 +16,7 @@ const DashboardUser = ({userType}) => {
   useEffect(() => {
     fetchCars();
     getBoughtCars();
-  }, []);
+  }, [fetchCars(),getBoughtCars()]);
 
   const fetchCars = async () => {
     try {
