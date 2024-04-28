@@ -44,6 +44,9 @@ const DashboardUser = ({userType}) => {
           body: JSON.stringify({ carId: carId }),
         }
       );
+      if (!response.ok) {
+        throw new Error("Failed to fetch cars");
+      }
       setCars((prevCars) => prevCars.filter((car) => car.car_id !== carId));
       navigate(`/dashboard/user/${email}`);
     } catch (error) {
