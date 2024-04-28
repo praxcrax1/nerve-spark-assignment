@@ -12,7 +12,7 @@ const SignupPage = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3001/api/signup/${userType}`,
+        `https://nerve-spark-backend.onrender.com/api/signup/${userType}`,
         {
           method: "POST",
           headers: {

@@ -11,7 +11,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3001/api/login/${userType}`, {
+      const response = await fetch(`https://nerve-spark-backend.onrender.com/api/login/${userType}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

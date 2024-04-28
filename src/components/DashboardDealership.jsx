@@ -19,7 +19,7 @@ const DashboardDealership = ({userType}) => {
   const fetchCars = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/api/cars");
+      const response = await fetch("https://nerve-spark-backend.onrender.com/api/cars");
       if (!response.ok) {
         throw new Error("Failed to fetch cars");
       }
@@ -42,7 +42,7 @@ const DashboardDealership = ({userType}) => {
   const fetchInventory = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/dealership/inventory/${email}`
+        `https://nerve-spark-backend.onrender.com/api/dealership/inventory/${email}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch inventory");
@@ -60,7 +60,7 @@ const DashboardDealership = ({userType}) => {
   const handleAcquireCar = async (carId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/dealership/acquire/${email}`,
+        `https://nerve-spark-backend.onrender.com/api/dealership/acquire/${email}`,
         {
           method: "POST",
           headers: {
@@ -80,7 +80,7 @@ const DashboardDealership = ({userType}) => {
    const fetchSoldVehicles = async () => {
      try {
        const response = await fetch(
-         `http://localhost:3001/api/dealership/sold-vehicles/${email}`
+         `https://nerve-spark-backend.onrender.com/api/dealership/sold-vehicles/${email}`
        );
        if (!response.ok) {
          throw new Error("Failed to fetch sold vehicles");

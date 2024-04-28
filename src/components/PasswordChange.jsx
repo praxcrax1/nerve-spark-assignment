@@ -14,7 +14,7 @@ const PasswordChange = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3001/api/change-password`,
+        `https://nerve-spark-backend.onrender.com/api/change-password`,
         {
           method: "POST",
           headers: {

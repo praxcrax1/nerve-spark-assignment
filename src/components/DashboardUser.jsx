@@ -21,7 +21,7 @@ const DashboardUser = ({userType}) => {
 
   const fetchCars = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/cars");
+      const response = await fetch("https://nerve-spark-backend.onrender.com/api/cars");
       if (!response.ok) {
         throw new Error("Failed to fetch cars");
       }
@@ -36,7 +36,7 @@ const DashboardUser = ({userType}) => {
     try {
       // Call endpoint to buy car
       const response = await fetch(
-        `http://localhost:3001/api/buy-car/${email}/${dealership}`,
+        `https://nerve-spark-backend.onrender.com/api/buy-car/${email}/${dealership}`,
         {
           method: "POST",
           headers: {
@@ -58,7 +58,7 @@ const DashboardUser = ({userType}) => {
     setBtnState(!btnState);
     try {
       const response = await fetch(
-        `http://localhost:3001/api/dealerships/${carId}`
+        `https://nerve-spark-backend.onrender.com/api/dealerships/${carId}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch dealerships");
@@ -95,7 +95,7 @@ const DashboardUser = ({userType}) => {
 
   const getBoughtCars = async () =>{
     try {
-    const response = await fetch(`http://localhost:3001/api/user/cars/${email}`, {
+    const response = await fetch(`https://nerve-spark-backend.onrender.com/api/user/cars/${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
