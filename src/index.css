@@ -1,13 +1,189 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1{
+  text-align: center;
+}
+
+.box{
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.117);
+  width: 300px;
+  transform: translateY(120px);
+  border-radius: 15px;
+  padding: 15px;
+  /* box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.401); */
+  border: 1px solid black;
+
+}
+
+
+.box div{
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.user-button{
+  padding: 5px;
+  margin: 10px;
+  width: 120px;
+  background-color: rgba(0, 186, 0, 0.526);
+  border-radius: 15px;
+  transform: scale(1.2);
+  border: none;
+}
+
+.dealership-button{
+  padding: 5px;
+  margin: 10px;
+  width: 120px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: rgba(237, 45, 45, 0.886);
+  border-radius: 15px;
+  transform: scale(1.2);
+  border: none;
+}
+
+.form-items{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-items button{
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.user button:hover{
+  background-color: rgba(0, 186, 0, 0.29);
+}
+
+.user button{
+ background-color: rgba(0, 186, 0, 0.526);
+}
+
+.dealership button:hover{
+  background-color: rgba(237, 45, 45, 0.538);
+}
+
+.dealership button{
+ background-color: rgba(237, 45, 45, 0.886);
+}
+
+.user-navbar {
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's above other content */
+  background-color: rgb(1, 151, 1);
+}
+.dealership-navbar {
+  background-color: rgb(237, 45, 45);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar button {
+  color: white;
+  margin-left: 20px;
+  transform: translateX(-40px);
+  border-radius: 20px;
+  border: none;
+  padding: 10px;
+  background: none;
+}
+
+.cars-display{
+  margin-top: 80px;
+}
+
+.cars-display input{
+  transform: scale(1.2);
+  margin-left: 43px;
+}
+
+
+.card-container {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.card-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-item {
+  list-style-type: none; /* Adjust based on the width you want */
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 250px;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.card p {
+  margin: 6px 0;
+}
+
+.card ul {
+  margin: 10px 0 0 0;
+}
+
+
+.card button {
+  margin-top: 10px;
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+}
+
+.view-dealership{
+  justify-content: space-around;
+  margin: 10px;
+  display: flex;
+}
+
+.view-dealership p{
+  margin-top: 13px;
 }
