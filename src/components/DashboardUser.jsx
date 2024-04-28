@@ -16,7 +16,7 @@ const DashboardUser = ({userType}) => {
   useEffect(() => {
     fetchCars();
     getBoughtCars();
-  }, [fetchCars(),getBoughtCars()]);
+  });
 
   const fetchCars = async () => {
     try {
@@ -44,7 +44,6 @@ const DashboardUser = ({userType}) => {
           body: JSON.stringify({ carId: carId }),
         }
       );
-      const data = await response.json();
       setCars((prevCars) => prevCars.filter((car) => car.car_id !== carId));
       navigate(`/dashboard/user/${email}`);
     } catch (error) {

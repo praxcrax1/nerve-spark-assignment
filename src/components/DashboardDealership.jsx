@@ -13,7 +13,7 @@ const DashboardDealership = ({userType}) => {
   useEffect(() => {
     fetchCars();
     fetchSoldVehicles();
-  }, [fetchCars(),fetchSoldVehicles()]);
+  });
 
   const fetchCars = async () => {
     try {
