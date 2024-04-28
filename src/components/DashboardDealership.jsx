@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { useLoading } from "./LoadingContext";
+import { useRef } from "react";
 
 const DashboardDealership = ({ userType }) => {
   const [cars, setCars] = useState([]);
@@ -9,10 +10,14 @@ const DashboardDealership = ({ userType }) => {
   const { email } = useParams();
   const [soldVehicles, setSoldVehicles] = useState([]);
   const { setLoadingState, setErrorState } = useLoading();
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    fetchCars();
-    fetchSoldVehicles();
+    if (!isMounted.current) {
+      fetchCars();
+      fetchSoldVehicles();
+      isMounted.current = true; // Set to true after the initial mount
+    }
   });
 
   const fetchCars = async () => {

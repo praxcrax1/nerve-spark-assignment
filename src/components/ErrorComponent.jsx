@@ -1,7 +1,6 @@
 // ErrorComponent.js
 import React from "react";
 import { useLoading } from "./LoadingContext";
-import "./ErrorComponent.css"; // Import CSS file for styling
 
 const ErrorComponent = () => {
   const { error } = useLoading();

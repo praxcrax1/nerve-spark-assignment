@@ -1,7 +1,7 @@
 // LoadingSpinner.js
 import React from "react";
 import { useLoading } from "./LoadingContext";
-import "./LoadingSpinner.css"; // Import CSS file for styling
+
 
 const LoadingSpinner = () => {
   const { loading } = useLoading();
