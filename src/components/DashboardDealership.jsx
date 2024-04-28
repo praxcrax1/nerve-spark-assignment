@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
+
 
 const DashboardDealership = ({userType}) => {
   const [cars, setCars] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { email } = useParams();
   const [message, setMessage] = useState([]);
   const [soldVehicles, setSoldVehicles] = useState([]);
@@ -14,10 +13,9 @@ const DashboardDealership = ({userType}) => {
   useEffect(() => {
     fetchCars();
     fetchSoldVehicles();
-  }, []);
+  }, [fetchCars,fetchSoldVehicles]);
 
   const fetchCars = async () => {
-    setLoading(true);
     try {
       const response = await fetch("https://nerve-spark-backend.onrender.com/api/cars");
       if (!response.ok) {
@@ -34,8 +32,6 @@ const DashboardDealership = ({userType}) => {
     } catch (error) {
       console.error("Error fetching cars:", error);
       setMessage("Failed to fetch cars");
-    } finally {
-      setLoading(false);
     }
   };
 
