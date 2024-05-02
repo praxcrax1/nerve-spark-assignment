@@ -9,6 +9,7 @@ import SignupPage from "./components/SignupPage";
 import DashboardUser from "./components/DashboardUser";
 import DashboardDealership from "./components/DashboardDealership";
 import PasswordChange from "./components/PasswordChange";
+import NotFoundPage from "./components/NotFoundPage";
 
 const App = () => {
   return (
