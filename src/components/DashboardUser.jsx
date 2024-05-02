@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "./LoadingContext";
-import { useRef } from "react";
 
 const DashboardUser = ({ userType }) => {
   const [cars, setCars] = useState([]);
@@ -13,17 +12,12 @@ const DashboardUser = ({ userType }) => {
   const [boughtCars, setBoughtCars] = useState([]);
   const { email } = useParams();
   const { setLoadingState, setErrorState } = useLoading();
-  const isMounted = useRef(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isMounted.current) {
-      fetchCars();
-      getBoughtCars();
-      isMounted.current = true;
-    }
+    fetchCars();
+    getBoughtCars();
   });
-
 
   const fetchCars = async () => {
     setLoadingState(true); // Set loading state to true

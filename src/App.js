@@ -29,6 +29,7 @@ const App = () => {
             element={<DashboardDealership userType="dealership" />}
           />
           <Route path="/change-password/:email" element={<PasswordChange />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </LoadingContextProvider>

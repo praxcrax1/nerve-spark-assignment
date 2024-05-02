@@ -216,3 +216,8 @@ h1{
   margin: 10px; /* Add margin to separate from other content */
 }
 
+.not-found{
+  margin: 0 auto;
+  color: #ff0000;
+}
+
