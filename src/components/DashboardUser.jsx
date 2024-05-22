@@ -17,7 +17,7 @@ const DashboardUser = ({ userType }) => {
   useEffect(() => {
     fetchCars();
     getBoughtCars();
-  });
+  },[boughtCars]);
 
   const fetchCars = async () => {
     setLoadingState(true); // Set loading state to true

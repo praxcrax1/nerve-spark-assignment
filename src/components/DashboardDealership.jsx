@@ -18,7 +18,7 @@ const DashboardDealership = ({ userType }) => {
       fetchSoldVehicles();
       isMounted.current = true; // Set to true after the initial mount
     }
-  });
+  },[]);
 
   const fetchCars = async () => {
     setLoadingState(true); // Set loading state to true
