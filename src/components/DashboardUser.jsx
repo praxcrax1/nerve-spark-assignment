@@ -42,6 +42,7 @@ const DashboardUser = ({ userType }) => {
   const confirmBuyCar = async (carId, dealership) => {
     setLoadingState(true); // Set loading state to true
     setErrorState(null); // Reset error state
+
     try {
       const response = await fetch(
         `https://nerve-spark-backend.onrender.com/api/buy-car/${email}/${dealership}`,
@@ -62,7 +63,8 @@ const DashboardUser = ({ userType }) => {
       console.error("Error during buying car:", error);
       setErrorState("Failed to buy car"); // Set error message
     } finally {
-      setLoadingState(false); // Set loading state back to false
+      setLoadingState(false);
+      getBoughtCars(); // Set loading state back to false
     }
   };
 
