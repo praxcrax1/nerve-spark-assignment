@@ -17,7 +17,7 @@ const DashboardUser = ({ userType }) => {
   useEffect(() => {
     fetchCars();
     getBoughtCars();
-  },[boughtCars]);
+  },[]);
 
   const fetchCars = async () => {
     setLoadingState(true); // Set loading state to true
@@ -26,9 +26,9 @@ const DashboardUser = ({ userType }) => {
       const response = await fetch(
         "https://nerve-spark-backend.onrender.com/api/cars"
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch cars");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Failed to fetch cars");
+      // }
       const data = await response.json();
       setCars(data);
     } catch (error) {
